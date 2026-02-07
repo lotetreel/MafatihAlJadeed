@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'sepia';
+type Theme = 'dark' | 'light';
 
 interface ThemeContextType {
   theme: Theme;
@@ -15,12 +15,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const root = document.documentElement;
-    root.classList.remove('dark', 'sepia');
+    root.classList.remove('dark', 'light');
     root.classList.add(theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'sepia' : 'dark');
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   };
 
   return (

@@ -60,6 +60,32 @@
     --navy-light: #2A2018;
     --emerald: #2D8659;
   }
+
+  .light {
+    --background: 45 30% 97%;
+    --foreground: 220 30% 12%;
+    --card: 45 20% 94%;
+    --card-foreground: 220 30% 12%;
+    --popover: 45 20% 94%;
+    --popover-foreground: 220 30% 12%;
+    --primary: 35 75% 45%;
+    --primary-foreground: 45 30% 97%;
+    --secondary: 45 15% 88%;
+    --secondary-foreground: 220 30% 12%;
+    --muted: 45 15% 85%;
+    --muted-foreground: 220 15% 40%;
+    --accent: 35 75% 45%;
+    --accent-foreground: 45 30% 97%;
+    --border: 45 15% 80%;
+    --input: 45 15% 80%;
+    --ring: 35 75% 45%;
+
+    --gold: #B8860B;
+    --gold-dim: rgba(184, 134, 11, 0.6);
+    --navy: #F5F0E8;
+    --navy-light: #EDE8DF;
+    --emerald: #228B22;
+  }
 }
 
 @layer base {
@@ -138,6 +164,30 @@
   .nebula-gradient {
     background: radial-gradient(ellipse at 70% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
       radial-gradient(ellipse at 30% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 45%);
+  }
+
+  /* Light mode sky and clouds background */
+  .sky-clouds-bg {
+    background:
+      /* Sun glow */
+      radial-gradient(ellipse 200px 200px at 85% 10%, rgba(255, 200, 80, 0.25) 0%, transparent 60%),
+      /* Soft clouds */
+      radial-gradient(ellipse 180px 80px at 15% 25%, rgba(255, 255, 255, 0.7) 0%, transparent 70%),
+      radial-gradient(ellipse 220px 100px at 75% 35%, rgba(255, 255, 255, 0.5) 0%, transparent 70%),
+      radial-gradient(ellipse 160px 70px at 40% 15%, rgba(255, 255, 255, 0.6) 0%, transparent 70%),
+      radial-gradient(ellipse 200px 90px at 90% 55%, rgba(255, 255, 255, 0.4) 0%, transparent 70%),
+      radial-gradient(ellipse 140px 60px at 25% 65%, rgba(255, 255, 255, 0.45) 0%, transparent 70%),
+      radial-gradient(ellipse 180px 80px at 60% 80%, rgba(255, 255, 255, 0.35) 0%, transparent 70%),
+      /* Sky gradient */
+      linear-gradient(180deg,
+        rgba(135, 206, 250, 0.15) 0%,
+        rgba(176, 224, 255, 0.1) 30%,
+        rgba(240, 248, 255, 0.05) 60%,
+        transparent 100%);
+  }
+
+  .sun-glow {
+    box-shadow: 0 0 40px rgba(255, 180, 60, 0.2);
   }
 }
 

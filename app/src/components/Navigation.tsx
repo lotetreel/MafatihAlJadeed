@@ -53,11 +53,10 @@ export function Navigation() {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-lg ${
-                    location.pathname === link.path
-                      ? 'text-[hsl(var(--primary))]'
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
+                  className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-lg ${location.pathname === link.path
+                    ? 'text-[hsl(var(--primary))]'
+                    : 'text-muted-foreground hover:text-foreground'
+                    }`}
                 >
                   {location.pathname === link.path && (
                     <motion.div
@@ -120,11 +119,10 @@ export function Navigation() {
                   <Link
                     to={link.path}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
-                      location.pathname === link.path
-                        ? 'bg-secondary text-[hsl(var(--primary))]'
-                        : 'hover:bg-secondary/50 text-muted-foreground'
-                    }`}
+                    className={`flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${location.pathname === link.path
+                      ? 'bg-secondary text-[hsl(var(--primary))]'
+                      : 'hover:bg-secondary/50 text-muted-foreground'
+                      }`}
                   >
                     <span className="font-medium">{link.label}</span>
                     <ChevronRight className="w-4 h-4" />
