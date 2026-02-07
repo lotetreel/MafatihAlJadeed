@@ -84,9 +84,10 @@ export function DuaDetail() {
     }
 
     const hasPhrases = item.phrases && item.phrases.length > 0;
-    const arabicText = item.arabicText || item.phrases?.map(p => p.arabic).join(' ') || '';
-    const englishTranslation = item.englishTranslation || item.phrases?.map(p => p.english).join(' ') || '';
-    const transliteration = item.transliteration || item.phrases?.map(p => p.transliteration).join(' ') || '';
+    type Phrase = { arabic: string; english: string; transliteration?: string };
+    const arabicText = ('arabicText' in item ? item.arabicText : undefined) || item.phrases?.map((p: Phrase) => p.arabic).join(' ') || '';
+    const englishTranslation = ('englishTranslation' in item ? item.englishTranslation : undefined) || item.phrases?.map((p: Phrase) => p.english).join(' ') || '';
+    const transliteration = ('transliteration' in item ? item.transliteration : undefined) || item.phrases?.map((p: Phrase) => p.transliteration).join(' ') || '';
 
     return (
         <PageTransition>
