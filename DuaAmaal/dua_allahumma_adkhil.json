@@ -1,0 +1,92 @@
+{
+  "title": "Dua Allahumma Adkhil",
+  "id": "dua_allahumma_adkhil",
+  "content_type": "dua",
+  "level": "L1",
+  "description": "A invocation seeking divine assistance for the living and the deceased, recited after every obligatory prayer in Ramadan",
+  "preamble": {
+    "arabic": "وى الكفعمي في المصباح والبلد الأمين عن النبيّ صلى الله عليه و آله أنّه قال: « \nمَنْ دَعا بهذا الدُّعاءِ فِي رَمَضانَ بَعْدَ كُلِّ فَرِيضَةٍ غَفَرَ اللَّهُ لَهُ ذُنوبَهُ",
+    "english": "Al-Kaf‘amī has narrated in *al-Miṣbāḥ* and *al-Balad al-Amīn*, on the authority of the Prophet, may Allah bless him and his family, that he said: “Whoever supplicates with this supplication during Ramadan after every obligatory prayer, Allah will forgive his sins.”"
+  },
+  "phrases": [
+    {
+      "arabic": "اللَّهُمَّ ادْخِلْ عَلى اهْلِ الْقُبُورِ السُّرُورَ،",
+      "english": "O Allah, bring joy to the inhabitants of the graves.",
+      "transliteration": "Allāhumma adkhil ʿalā ahli ’l-qubūri ’s-surūr"
+    },
+    {
+      "arabic": "اللَّهُمَّ اغْنِ كُلَّ فَقيرٍ،",
+      "english": "O Allah, enrich every poor person.",
+      "transliteration": "Allāhumma aghni kulla faqīr"
+    },
+    {
+      "arabic": "اللهُمَّ اشْبِعْ كُلَّ جائِعٍ،",
+      "english": "O Allah, satisfy every hungry one.",
+      "transliteration": "Allāhumma ashbi‘ kulla jā’i‘in."
+    },
+    {
+      "arabic": "اللهُمَّ اكْسُ كُلَّ عُرْيانٍ،",
+      "english": "O Allah, clothe every naked person.",
+      "transliteration": "Allāhumma-ksu kulla ‘uryān,"
+    },
+    {
+      "arabic": "اللهُمَّ اقْضِ دَيْنَ كُلِّ مَدينٍ،",
+      "english": "O Allah, settle the debt of every debtor.",
+      "transliteration": "Allāhumma-qḍi dayna kulli madīn."
+    },
+    {
+      "arabic": "اللهُمَّ فَرِّجْ عَنْ كُلِّ مَكْرُوبٍ،",
+      "english": "O Allah, grant relief to every person in distress.",
+      "transliteration": "Allāhumma farrij ʿan kulli makrūb"
+    },
+    {
+      "arabic": "اللهُمَّ رُدَّ كُلَّ غَريبٍ،",
+      "english": "O Allah, return every stranger.",
+      "transliteration": "Allāhumma rudda kulla gharīb"
+    },
+    {
+      "arabic": "اللهُمَّ فُكَّ كُلَّ اسيرٍ،",
+      "english": "O Allah, free every captive.",
+      "transliteration": "Allāhumma fukka kulla asīr"
+    },
+    {
+      "arabic": "اللهُمَّ اصْلِحْ كُلَّ فاسِدٍ مِنْ امُورِ الْمُسْلِمينَ،",
+      "english": "O Allah, rectify all that is corrupt in the affairs of the Muslims.",
+      "transliteration": "Allāhumma aṣliḥ kulla fāsidin min umūri al-muslimīn"
+    },
+    {
+      "arabic": "اللهُمَّ اشْفِ كُلَّ مَريضٍ،",
+      "english": "O Allah, heal every sick person.",
+      "transliteration": "Allāhumma ishfi kulla marīḍin"
+    },
+    {
+      "arabic": "اللهُمَّ سُدَّ فَقْرَنا بِغِناكَ،",
+      "english": "O Allah, mend our poverty with Your wealth.",
+      "transliteration": "Allāhumma sudda faqranā bighināka"
+    },
+    {
+      "arabic": "اللهُمَّ غَيِّرْ سُوءَ حالِنا بِحُسْنِ حالِكَ،",
+      "english": "O Allah, change the wretchedness of our state through the excellence of Your state.",
+      "transliteration": "Allāhumma ghayyir sūʾa ḥālinā bi-ḥusni ḥālika"
+    },
+    {
+      "arabic": "اللهُمَّ اقْضِ عَنَّا الدَّيْنَ،",
+      "english": "O Allah, settle our debt.",
+      "transliteration": "Allāhumma iqḍi ʿannā ad-dayn"
+    },
+    {
+      "arabic": "وَاغْنِنا مِنَ الْفَقْرِ،",
+      "english": "And enrich us from poverty.",
+      "transliteration": "Waghninā minal-faqri,"
+    },
+    {
+      "arabic": "انَّكَ عَلى كُلِّ شَىْ ءٍ قَديرٌ [",
+      "english": "Verily, You have power over all things.",
+      "transliteration": "Innaka ʿalā kulli shayʾin qadīr"
+    }
+  ],
+  "postamble": {
+    "arabic": "[۲]: مصباح الكفعمي: ص ۶۱۷؛ البلد الأمين: ص ۲۲۲؛ بحار الأنوار: ج ۹۵، ص ۱۲۰.",
+    "english": "[2]: The Lamp of al-Kaf’ami: Page 617; The Secure City: Page 222; Oceans of Lights: Volume 95, Page 120."
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "title": "General Acts of Worship & Dhikr",
+  "id": "general_acts_of_worship_&_dhikr",
+  "content_type": "amaal",
+  "level": "L1",
+  "description": "A guide on increasing Dhikr, Salawat, and optional prayers (Nawafil), following the tradition of Imam al-Sajjad (a.s.) during Ramadan.",
+  "phrases": [
+    {
+      "arabic": "الإكثار من الدعاء والصلوات والاستغفار ويكثر من قوله:",
+      "english": "Frequently offer supplication, blessings, and seeking of forgiveness, and increase the recitation of the saying:",
+      "transliteration": "Al-ikthāru min ad-du‘ā’i wa-ṣ-ṣalawāti wa-l-istighfāri wa-yukthiru min qawlihi:"
+    },
+    {
+      "arabic": "لا إلهَ الَّا اللَّه (1)",
+      "english": "There is no deity except Allah.",
+      "transliteration": "Lā ilāha illallāh (1)"
+    },
+    {
+      "arabic": ".",
+      "english": "Please provide the Arabic text you would like me to translate. Once you provide the text, I will provide a formal and reverent English translation according to your instructions.",
+      "transliteration": "A‘ūdhu billāhi minash-shayṭānir-rajīm"
+    },
+    {
+      "arabic": "جاء في الخبر:",
+      "english": "It is related in the tradition:",
+      "transliteration": "Jā’a fī al-khabar:"
+    },
+    {
+      "arabic": "حين كان يدخل شهر رمضان لم يتكلّم الإمام السجاد عليه السلام سوى بالدعاء والتسبيح والاستغفار والتكبير(2).",
+      "english": "Whenever the month of Ramadan began, Imam al-Sajjad (peace be upon him) would not speak except in supplication, glorification, seeking forgiveness, and proclaiming the greatness of Allah.",
+      "transliteration": "Hīna kāna yadkhulu shahru Ramaḍāna lam yatakallam al-Imāmu al-Sajjādu ‘alayhi al-salāmu siwā bi-al-du‘ā’i wa-al-tasbīḥi wa-al-istighfāri wa-al-takbīr (2)."
+    },
+    {
+      "arabic": "كما ينبغي الإتيان بنوافل هذا الشهر الكريم (3) خاصّة من لم يوفّق للإتيان بالنوافل (سيّما نافلة الليل) في غير هذا الشهر.",
+      "english": "It is likewise fitting to observe the recommended prayers of this noble month, particularly for those who have not been granted the opportunity to perform recommended prayers—especially the Night Prayer—outside of this month.",
+      "transliteration": "Kamā yanbaghī al-ityānu bi-nawāfili hādhā ash-shahri al-karīm (3) khāṣṣatan man lam yuwaffaq lil-ityāni bin-nawāfili (siyyamā nāfilat al-layl) fī ghayri hādhā ash-shahr."
+    }
+  ]
+}

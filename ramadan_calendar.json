@@ -1,0 +1,117 @@
+{
+  "metadata": {
+    "source": "المفاتيح الجديدة (Al-Mafatih Al-Jadidat)",
+    "author": "آية الله العظمى مكارم شيرازي",
+    "section": "تقويم شهر رمضان المبارك",
+    "section_english": "Calendar of the Blessed Month of Ramadan",
+    "description": "Important dates and events during the month of Ramadan"
+  },
+  "calendar": {
+    "title": "تقويم هذا الشهر:",
+    "title_english": "Calendar of this Month",
+    "type": "sub_section",
+    "level": 4,
+    "events": [
+      {
+        "date_arabic": "العاشر من رمضان:",
+        "date_english": "The Tenth of Ramadan:",
+        "date_transliteration": "Al-Ashir min Ramadan:",
+        "events": [
+          {
+            "id": 12,
+            "arabic": "وفاة خديجة الكبرى عليها السلام سنة عشرة للبعثة .",
+            "english": "The passing of Khadijah al-Kubra (peace be upon her) in the tenth year of the Prophetic mission.",
+            "transliteration": "Wafat Khadijah al-Kubra alayhas-salam sanata 'ashara lil-bi'thah.",
+            "footnote_refs": [
+              {
+                "ref_id": "content_note_469_1",
+                "ref_num": "(1)",
+                "title": "منتهى الآمال: الفصل السادس، حياة النبي صلى الله عليه و آله؛ بحار الأنوار: ج 19، ص 5( طبعاً لا ينطبق ذلك اليوم مع ما ذكرناه)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "date_arabic": "الخامس عشر من رمضان:",
+        "date_english": "The Fifteenth of Ramadan:",
+        "date_transliteration": "Al-Khamis 'Ashar min Ramadan:",
+        "events": [
+          {
+            "id": 14,
+            "arabic": "ولادة سبط النبي صلى الله عليه و آله الأكبر الحسن المجتبى عليه السلام في السنة الثالثة للهجرة .",
+            "english": "The birth of the Prophet’s (peace and blessings be upon him and his progeny) eldest grandson, al-Hasan al-Mujtaba (peace be upon him), in the third year of the Hijra.",
+            "transliteration": "Wiladat Sibt al-Nabi sallallahu alayhi wa alih al-Akbar al-Hasan al-Mujtaba alayhis-salam fis-sanat al-thalithah lil-hijrah.",
+            "footnote_refs": [
+              {
+                "ref_id": "content_note_469_2",
+                "ref_num": "(2)",
+                "title": "منتهى الآمال: حياة الإمام الحسن عليه السلام."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "date_arabic": "السابع عشر:",
+        "date_english": "The Seventeenth:",
+        "date_transliteration": "Al-Sabi' 'Ashar:",
+        "events": [
+          {
+            "id": 16,
+            "arabic": "انتصار المسلمين في معركة بدر في السنة الثانية للهجرة .",
+            "english": "The victory of the Muslims in the Battle of Badr in the second year of the Hijra.",
+            "transliteration": "Intisar al-Muslimin fi ma'rakat Badr fis-sanat al-thaniyah lil-hijrah.",
+            "footnote_refs": [
+              {
+                "ref_id": "content_note_469_3",
+                "ref_num": "(3)",
+                "title": "المصدر السابق: حوادث السنة الثانية للهجرة."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "date_arabic": "التاسع عشر:",
+        "date_english": "The Nineteenth:",
+        "date_transliteration": "Al-Tasi' 'Ashar:",
+        "events": [
+          {
+            "id": 18,
+            "arabic": "جرح أميرالمؤمنين عليه السلام على يد ابن ملجم، أشقى الآخرين في سنة 40 ه .",
+            "english": "The wounding of the Commander of the Faithful (peace be upon him) at the hands of Ibn Muljam, the most wretched of the latter generations, in the 40th year of the Hijra.",
+            "transliteration": "Jurh Amir al-Mu'minin alayhis-salam 'ala yad Ibn Muljam, ashqa al-akhirin fi sanat arba'in Hijriyah.",
+            "footnote_refs": [
+              {
+                "ref_id": "content_note_469_4",
+                "ref_num": "(4)",
+                "title": "المصدر السابق: حياة أميرالمؤمنين عليه السلام."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "date_arabic": "الحادي والعشرون:",
+        "date_english": "The Twenty-first:",
+        "date_transliteration": "Al-Hadi wal-'Ishrun:",
+        "events": [
+          {
+            "id": 20,
+            "arabic": "شهادة مولى المتّقين أميرالمؤمنين عليّ بن أبي طالب عليه السلام سنة 40 ه والتي أحزنت العالم الإسلاميّ .",
+            "english": "The martyrdom of the Master of the Pious, the Commander of the Faithful Ali ibn Abi Talib (peace be upon him), in the 40th year of the Hijra, which saddened the Islamic world.",
+            "transliteration": "Shahadat Mawla al-Muttaqin Amir al-Mu'minin Ali bin Abi Talib alayhis-salam sanat arba'in Hijriyah wallati ahzanat al-'alam al-Islami.",
+            "footnote_refs": [
+              {
+                "ref_id": "content_note_469_5",
+                "ref_num": "(5)",
+                "title": "المصدر السابق."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

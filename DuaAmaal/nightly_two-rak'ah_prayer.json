@@ -1,0 +1,69 @@
+{
+  "title": "Nightly Two-Rak'ah Prayer",
+  "id": "nightly_two-rak'ah_prayer",
+  "content_type": "amaal",
+  "level": "L1",
+  "description": "A recommended two-unit prayer to be performed every night of Ramadan, involving the recitation of Surah al-Ikhlas three times, followed by specific glorifications (Tasbih) for the forgiveness of sins.",
+  "phrases": [
+    {
+      "arabic": "يستحبّ في كلّ ليلة صلاة ركعتين تقرأ في كلّ ركعة",
+      "english": "It is recommended to perform a two-unit prayer every night, reciting in each unit...",
+      "transliteration": "Yustahabbu fī kulli laylatin ṣalātu rak‘atayn taqra’u fī kulli rak‘ah."
+    },
+    {
+      "arabic": "الحمد والتوحيد",
+      "english": "Praise and Oneness",
+      "transliteration": "Al-Hamdu wat-Tawhid"
+    },
+    {
+      "arabic": "ثلاث مرّات فإذا سلّمت تقول:",
+      "english": "Three times. Then, when you have offered the salutations, you shall say:",
+      "transliteration": "Thalātha marrāt fa-idhā sallamta taqūl:"
+    },
+    {
+      "arabic": "سُبْحانَ مَنْ هُوَ حَفيظٌ لا يَغْفُلُ،",
+      "english": "Glory be to Him Who is the All-Preserving and never heedless.",
+      "transliteration": "Subḥāna man huwa ḥafīẓun lā yaghfulu."
+    },
+    {
+      "arabic": "سُبحانَ مَنْ هُوَ رَحيمٌ لا يَعْجَلُ،",
+      "english": "Glory be to Him Who is Merciful and does not hasten.",
+      "transliteration": "Subḥāna man huwa raḥīmun lā ya‘jalu,"
+    },
+    {
+      "arabic": "سُبْحانَ مَنْ هُوَ قآئِمٌ لا يَسْهُو،",
+      "english": "Glory be to Him Who is Ever-Watchful and never forgets.",
+      "transliteration": "Subḥāna man huwa qā’imun lā yas-hū."
+    },
+    {
+      "arabic": "سُبْحانَ مَنْ هُوَ دائِمٌ لا يَلْهُو.",
+      "english": "Glory be to Him Who is Everlasting and never heedless.",
+      "transliteration": "Subḥāna man huwa dā’imun lā yalhū."
+    },
+    {
+      "arabic": "ثمّ تسبّح بالتسبيحات الأربعة سبع مرّات ثمّ تقول:",
+      "english": "Then glorify Allah with the Fourfold Glorification seven times, and then say:",
+      "transliteration": "Thumma tusabbihu bi-t-tasbīḥāti al-arbaʿati sabʿa marrātin thumma taqūl:"
+    },
+    {
+      "arabic": "سُبْحانَكَ سُبْحانَكَ سُبْحانَكَ،",
+      "english": "Glory be to You, Glory be to You, Glory be to You.",
+      "transliteration": "Subḥānaka, subḥānaka, subḥānaka,"
+    },
+    {
+      "arabic": "يا عَظيمُ اغْفِرْ لِىَ الذَّنْبَ الْعَظيمَ.",
+      "english": "O Magnificent One, forgive for me the great sin.",
+      "transliteration": "Yā ʿAẓīmu ighfir liya adh-dhanba al-ʿaẓīm."
+    },
+    {
+      "arabic": "ثمّ تصلّي على النّبيِّ وآلِه عَشْرَ مرّات.",
+      "english": "Then invoke blessings upon the Prophet and his progeny ten times.",
+      "transliteration": "Thumma tuṣallī ʿalā an-nabiyyi wa-ālihī ʿashra marrāt."
+    },
+    {
+      "arabic": "من صلّى هذه الصلاة غفر اللَّه له ذنوباً كثيرة",
+      "english": "Whoever performs this prayer, Allah shall forgive their numerous sins.",
+      "transliteration": "Man ṣallā hādhihi al-ṣalāh ghafara Allāhu lahu dhunūban kathīrah"
+    }
+  ]
+}

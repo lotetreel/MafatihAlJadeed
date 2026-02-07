@@ -1,0 +1,18 @@
+{
+  "title": "Recommendation to Pray for Hajj",
+  "id": "recommendation_to_pray_for_hajj",
+  "content_type": "amaal",
+  "level": "L1",
+  "description": "A narration from Imam al-Sadiq (a.s.) instructing believers to specifically supplicate for the opportunity to perform Hajj every night of Ramadan after the Maghrib prayer.",
+  "preamble": {
+    "arabic": "وروى السيّد ابن طاووس في الإقبال عن أبي بصير أنّ الإمام الصادق عليه السلام قال:",
+    "english": "Sayyid Ibn Tawus narrated in *al-Iqbal* on the authority of Abu Basir that Imam al-Sadiq (peace be upon him) said:"
+  },
+  "phrases": [
+    {
+      "arabic": "ادْعُ للحَجِّ فِي لَيالِي شَهْرِ رَمَضانَ بَعْدَ المَغْرِبِ»(2).",
+      "english": "Supplicate for the Pilgrimage during the nights of the month of Ramadan after the Maghrib prayer.",
+      "transliteration": "Id‘u lil-ḥajji fī layālī shahri ramaḍāna ba‘da al-maghribi."
+    }
+  ]
+}
