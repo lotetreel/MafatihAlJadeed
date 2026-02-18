@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PageTransition } from '@/components/PageTransition';
 import { SwipeableItem } from '@/components/SwipeableItem';
-import { DaySelector } from '@/components/DaySelector';
+
 import { useCompletion } from '@/contexts/CompletionContext';
 import { duas, aamal } from '@/data/content';
 import {
@@ -86,7 +86,7 @@ export function AamalDua() {
   const navigate = useNavigate();
   // maxLevel is cumulative - shows all items from level 1 up to maxLevel
   const [maxLevel, setMaxLevel] = useState<number>(1);
-  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+
   const { isCompleted, toggleComplete } = useCompletion();
 
   // Combine duas and a'amal - Sorted by global order
@@ -120,42 +120,16 @@ export function AamalDua() {
     });
   }, []);
 
-  // Filter items based on level and day
+  // Filter items based on level
   const filteredItems = useMemo(() => {
-    return allItems.filter(item => {
-      // Level filter (cumulative)
-      const levelMatch = item.level <= maxLevel;
-
-      // Day filter
-      let dayMatch = false;
-      if (item.applicableDays === 'all') {
-        // General items always show
-        dayMatch = true;
-      } else if (selectedDay !== null) {
-        // Day-specific items only show when that day is selected
-        dayMatch = item.applicableDays.includes(selectedDay);
-      } else {
-        // When no day selected, don't show day-specific items
-        dayMatch = false;
-      }
-
-      return levelMatch && dayMatch;
-    });
-  }, [allItems, maxLevel, selectedDay]);
+    return allItems.filter(item => item.level <= maxLevel);
+  }, [allItems, maxLevel]);
 
   // Separate for stats display
   const filteredDuas = filteredItems.filter(item => item.type === 'dua');
   const filteredAamal = filteredItems.filter(item => item.type === 'aamal');
 
-  // Count day-specific items for the selected day
-  const daySpecificItems = useMemo(() => {
-    if (!selectedDay) return [];
-    return allItems.filter(item =>
-      item.level <= maxLevel &&
-      item.applicableDays !== 'all' &&
-      item.applicableDays.includes(selectedDay)
-    );
-  }, [allItems, maxLevel, selectedDay]);
+
 
 
 
@@ -236,13 +210,7 @@ export function AamalDua() {
                 })}
               </div>
 
-              {/* Day Selector */}
-              <div className="glass-card p-6">
-                <DaySelector
-                  selectedDay={selectedDay}
-                  onSelectDay={setSelectedDay}
-                />
-              </div>
+
 
 
             </motion.div>
@@ -259,15 +227,10 @@ export function AamalDua() {
                 <div className="flex items-center justify-between flex-wrap gap-4">
                   <div>
                     <h2 className="text-2xl font-semibold mb-1">
-                      {selectedDay ? `Day ${selectedDay} Practices` : 'General Practices'}
+                      Practices
                     </h2>
                     <p className="text-muted-foreground">
                       Showing {filteredItems.length} {filteredItems.length === 1 ? 'practice' : 'practices'}
-                      {selectedDay && daySpecificItems.length > 0 && (
-                        <span className="text-[hsl(var(--primary))]">
-                          {' '}(including {daySpecificItems.length} special for this day)
-                        </span>
-                      )}
                     </p>
                   </div>
 
@@ -384,13 +347,10 @@ export function AamalDua() {
                   >
                     <CalendarDays className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
                     <h3 className="text-lg font-medium mb-2">
-                      {selectedDay ? 'No special practices for this day' : 'Select a day'}
+                      No practices at this level
                     </h3>
                     <p className="text-muted-foreground max-w-md mx-auto">
-                      {selectedDay
-                        ? `There are no level ${maxLevel} or below practices specifically for day ${selectedDay}. Try selecting a different level or day.`
-                        : 'Select a specific day from the calendar to see special duas and a\'amal for that date, or increase your level to see more general practices.'
-                      }
+                      Try selecting a different level to see more practices.
                     </p>
                   </motion.div>
                 )}
