@@ -76,7 +76,7 @@ const itemVariants = {
 export function Home() {
   return (
     <PageTransition>
-      <div className="page-container relative">
+      <div className="page-container relative overflow-x-hidden">
         {/* Hero Section */}
         <section className="min-h-screen flex flex-col items-center justify-center relative px-4 pt-20">
           {/* Crescent Decoration */}
