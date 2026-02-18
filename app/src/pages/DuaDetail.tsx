@@ -301,9 +301,6 @@ export function DuaDetail() {
                                 }`}>
                                 {item.type === 'dua' ? 'Dua' : "A'mal"}
                             </span>
-                            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-secondary text-muted-foreground border border-border">
-                                {item.source}
-                            </span>
                         </div>
                     </motion.div>
 

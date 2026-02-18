@@ -323,10 +323,7 @@ export function AamalDua() {
 
                             <ExpandableDescription text={item.description} />
 
-                            <div className="mt-3 pt-3 border-t border-border/30 flex items-center justify-between">
-                              <span className="text-xs text-muted-foreground">
-                                {item.source}
-                              </span>
+                            <div className="mt-3 pt-3 border-t border-border/30 flex items-center justify-end">
                               <div className="flex items-center gap-1 text-xs text-[hsl(var(--primary))]">
                                 <span>View Full</span>
                                 <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-all" />

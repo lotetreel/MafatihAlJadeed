@@ -67,8 +67,8 @@ export function DuaDetailModal({ isOpen, onClose, item }: DuaDetailModalProps) {
                             <div className="flex items-start justify-between p-6 border-b border-border/30">
                                 <div className="flex items-start gap-4 flex-1 min-w-0">
                                     <div className={`w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center ${item.type === 'dua'
-                                            ? 'bg-indigo-500/20'
-                                            : 'bg-amber-500/20'
+                                        ? 'bg-indigo-500/20'
+                                        : 'bg-amber-500/20'
                                         }`}>
                                         {item.type === 'dua' ? (
                                             <BookOpen className="w-6 h-6 text-indigo-400" />
@@ -83,19 +83,16 @@ export function DuaDetailModal({ isOpen, onClose, item }: DuaDetailModalProps) {
                                         )}
                                         <div className="flex flex-wrap items-center gap-2 mt-2">
                                             <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${item.type === 'dua'
-                                                    ? 'bg-indigo-500/20 text-indigo-400'
-                                                    : 'bg-amber-500/20 text-amber-400'
+                                                ? 'bg-indigo-500/20 text-indigo-400'
+                                                : 'bg-amber-500/20 text-amber-400'
                                                 }`}>
                                                 {item.type === 'dua' ? 'Dua' : "A'mal"}
                                             </span>
                                             <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${item.level === 1 ? 'bg-emerald-500/20 text-emerald-400' :
-                                                    item.level === 2 ? 'bg-blue-500/20 text-blue-400' :
-                                                        'bg-purple-500/20 text-purple-400'
+                                                item.level === 2 ? 'bg-blue-500/20 text-blue-400' :
+                                                    'bg-purple-500/20 text-purple-400'
                                                 }`}>
                                                 Level {item.level}
-                                            </span>
-                                            <span className="text-xs text-muted-foreground">
-                                                {item.source}
                                             </span>
                                         </div>
                                     </div>
