@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PageTransition } from '@/components/PageTransition';
@@ -85,7 +85,14 @@ const contentOrder = contentOrderRaw as string[];
 export function AamalDua() {
   const navigate = useNavigate();
   // maxLevel is cumulative - shows all items from level 1 up to maxLevel
-  const [maxLevel, setMaxLevel] = useState<number>(1);
+  const [maxLevel, setMaxLevel] = useState<number>(() => {
+    const saved = localStorage.getItem('user_level');
+    return saved ? parseInt(saved) : 1;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('user_level', maxLevel.toString());
+  }, [maxLevel]);
 
   const { isCompleted, toggleComplete } = useCompletion();
 

@@ -11,7 +11,15 @@ interface CompletionContextType {
 const CompletionContext = createContext<CompletionContextType | undefined>(undefined);
 
 export function CompletionProvider({ children }: { children: ReactNode }) {
-  const [completedItems, setCompletedItems] = useState<Set<string>>(new Set());
+  const [completedItems, setCompletedItems] = useState<Set<string>>(() => {
+    try {
+      const saved = localStorage.getItem('completed_items');
+      return saved ? new Set(JSON.parse(saved)) : new Set();
+    } catch (e) {
+      console.error('Failed to load completed items', e);
+      return new Set();
+    }
+  });
 
   const toggleComplete = useCallback((id: string) => {
     setCompletedItems(prev => {
@@ -21,6 +29,14 @@ export function CompletionProvider({ children }: { children: ReactNode }) {
       } else {
         newSet.add(id);
       }
+
+      // Save to localStorage
+      try {
+        localStorage.setItem('completed_items', JSON.stringify(Array.from(newSet)));
+      } catch (e) {
+        console.error('Failed to save completed items', e);
+      }
+
       return newSet;
     });
   }, []);
@@ -31,6 +47,7 @@ export function CompletionProvider({ children }: { children: ReactNode }) {
 
   const clearAll = useCallback(() => {
     setCompletedItems(new Set());
+    localStorage.removeItem('completed_items');
   }, []);
 
   const getCompletionStats = useCallback(() => {
