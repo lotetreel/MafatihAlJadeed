@@ -24,15 +24,71 @@ export function DuaDetail() {
     const [copied, setCopied] = useState(false);
 
     // View State
-    const [viewType, setViewType] = useState<'phrase' | 'continuous'>('phrase');
-    const [showArabic, setShowArabic] = useState(true);
-    const [showTransliteration, setShowTransliteration] = useState(true);
-    const [showEnglish, setShowEnglish] = useState(true);
+    const [viewType, setViewType] = useState<'phrase' | 'continuous'>(() => {
+        const saved = localStorage.getItem('view_type');
+        return (saved === 'phrase' || saved === 'continuous') ? saved : 'phrase';
+    });
+
+    const [showArabic, setShowArabic] = useState(() => {
+        const saved = localStorage.getItem('show_arabic');
+        return saved !== null ? JSON.parse(saved) : true;
+    });
+
+    const [showTransliteration, setShowTransliteration] = useState(() => {
+        const saved = localStorage.getItem('show_transliteration');
+        return saved !== null ? JSON.parse(saved) : true;
+    });
+
+    const [showEnglish, setShowEnglish] = useState(() => {
+        const saved = localStorage.getItem('show_english');
+        return saved !== null ? JSON.parse(saved) : true;
+    });
 
     // Typography Settings
-    const [arabicLineHeight, setArabicLineHeight] = useState(2.2); // Higher default to prevent harakat overlap
-    const [arabicFontSize, setArabicFontSize] = useState(2); // rem units (2rem = 32px)
-    const [englishFontSize, setEnglishFontSize] = useState(1.125); // rem units (1.125rem = 18px)
+    const [arabicLineHeight, setArabicLineHeight] = useState(() => {
+        const saved = localStorage.getItem('arabic_line_height');
+        return saved ? parseFloat(saved) : 2.2;
+    });
+
+    const [arabicFontSize, setArabicFontSize] = useState(() => {
+        const saved = localStorage.getItem('arabic_font_size');
+        return saved ? parseFloat(saved) : 2;
+    });
+
+    const [englishFontSize, setEnglishFontSize] = useState(() => {
+        const saved = localStorage.getItem('english_font_size');
+        return saved ? parseFloat(saved) : 1.125;
+    });
+
+    // Persist Settings
+    useEffect(() => {
+        localStorage.setItem('view_type', viewType);
+    }, [viewType]);
+
+    useEffect(() => {
+        localStorage.setItem('show_arabic', JSON.stringify(showArabic));
+    }, [showArabic]);
+
+    useEffect(() => {
+        localStorage.setItem('show_transliteration', JSON.stringify(showTransliteration));
+    }, [showTransliteration]);
+
+    useEffect(() => {
+        localStorage.setItem('show_english', JSON.stringify(showEnglish));
+    }, [showEnglish]);
+
+    useEffect(() => {
+        localStorage.setItem('arabic_line_height', arabicLineHeight.toString());
+    }, [arabicLineHeight]);
+
+    useEffect(() => {
+        localStorage.setItem('arabic_font_size', arabicFontSize.toString());
+    }, [arabicFontSize]);
+
+    useEffect(() => {
+        localStorage.setItem('english_font_size', englishFontSize.toString());
+    }, [englishFontSize]);
+
 
     // Find the item from duas or aamal
     const item = useMemo(() => {
@@ -46,16 +102,17 @@ export function DuaDetail() {
         return null;
     }, [id]);
 
-    // Set initial view type - default to phrase by phrase if available
+    // Validate View Type based on Content Availability
     useEffect(() => {
         if (item) {
-            if (item.phrases && item.phrases.length > 0) {
-                setViewType('phrase');
-            } else {
+            const hasPhrases = item.phrases && item.phrases.length > 0;
+            // If user prefers phrase view but content has no phrases, force continuous
+            if (viewType === 'phrase' && !hasPhrases) {
                 setViewType('continuous');
             }
+            // If user prefers continuous, we respect it regardless of phrases
         }
-    }, [item]);
+    }, [item, viewType]);
 
     const handleCopyArabic = async () => {
         if (item && 'arabicText' in item && item.arabicText) {
