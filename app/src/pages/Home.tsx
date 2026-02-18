@@ -146,7 +146,7 @@ export function Home() {
                 to="/calendar"
                 className="px-8 py-4 rounded-xl border border-border/50 font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all"
               >
-                Explore the Calendar
+                Explore the daily amaal and dua
               </Link>
             </motion.div>
           </motion.div>
