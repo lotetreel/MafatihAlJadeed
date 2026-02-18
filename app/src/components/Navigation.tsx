@@ -2,14 +2,13 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Moon, Sun, BookOpen, Menu, X, ChevronRight } from 'lucide-react';
+import { Moon, Sun, Menu, X, ChevronRight } from 'lucide-react';
 
 const navLinks = [
   { path: '/', label: 'Home', icon: null },
-  { path: '/understanding', label: 'Understanding', icon: BookOpen },
   { path: '/aamal-dua', label: 'Aamal & Dua', icon: null },
   { path: '/calendar', label: 'Calendar', icon: null },
-  { path: '/education', label: 'Education', icon: null },
+  { path: '/ramadhan-fiqh', label: 'Ramadhan Fiqh', icon: null },
 ];
 
 export function Navigation() {

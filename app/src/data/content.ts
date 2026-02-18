@@ -18,21 +18,19 @@ export interface CalendarEvent {
   level: 1 | 2 | 3;
 }
 
-export interface FiqhPoint {
-  id: string;
-  question: string;
-  answer: string;
-  source: string;
-  day: number;
+export interface FiqhRuling {
+  type: 'ruling' | 'exception' | 'important' | 'detail';
+  label: string;
+  text: string;
+  link?: string;
 }
 
-export interface AkhlaqPoint {
+export interface FiqhQAItem {
   id: string;
-  title: string;
-  quote: string;
-  source: string;
-  reflection: string;
-  day: number;
+  topic: string;
+  question: string;
+  answer: string;
+  rulings?: FiqhRuling[];
 }
 
 export const calendarEvents: CalendarEvent[] = [
@@ -80,102 +78,112 @@ export const calendarEvents: CalendarEvent[] = [
 ];
 
 
-export const fiqhPoints: FiqhPoint[] = [
+export const fiqhQA: FiqhQAItem[] = [
   {
     id: 'fiqh-1',
-    question: 'What invalidates the fast during Ramadan?',
-    answer: 'Intentional eating, drinking, sexual intercourse, or deliberate vomiting invalidates the fast. Unintentional acts (forgetting) do not break the fast according to the hadith: "Whoever forgets he is fasting and eats or drinks, let him complete his fast, for it was Allah who fed him and gave him drink."',
-    source: 'Wasail al-Shia, Kitab al-Sawm',
-    day: 1
+    topic: 'Intention (Niyyah)',
+    question: 'Do I need to have an intention for fasting, and must I say it loudly?',
+    answer: 'Yes, for every act of worship (like Salah or fasting), you must have an intention; otherwise, the action is not valid. However, the intention does not need to be said loudly. As long as the intention is in the heart before the action commences, it is sufficient.',
+    rulings: [
+      {
+        type: 'ruling',
+        label: 'Ruling',
+        text: 'It is permissible to have the intention for all 30 days of fasting before the first night of Ramadan begins.',
+      },
+    ],
   },
   {
     id: 'fiqh-2',
-    question: 'Can one use eye drops while fasting?',
-    answer: 'Yes, eye drops do not invalidate the fast as they are not considered nourishment and do not reach the stomach through a normal channel.',
-    source: 'Tahdhib al-Ahkam',
-    day: 2
+    topic: 'Brushing Teeth',
+    question: 'Are we allowed to brush our teeth, and what happens if I swallow water?',
+    answer: 'Yes, it is not only permissible but mustahab (recommended) to brush your teeth while fasting.',
+    rulings: [
+      {
+        type: 'ruling',
+        label: 'Ruling',
+        text: 'As long as you spit the water out three times, the moisture that remains in your mouth is permissible, even if you accidentally swallow it.',
+      },
+    ],
   },
   {
     id: 'fiqh-3',
-    question: 'What is the ruling on brushing teeth while fasting?',
-    answer: 'Brushing teeth with a dry toothbrush or miswak is permitted. Using toothpaste is discouraged during the day as there is a risk of swallowing, though it does not automatically invalidate the fast unless swallowed intentionally.',
-    source: 'Man La Yahduruhu al-Faqih',
-    day: 3
+    topic: 'State of Janabah',
+    question: 'Does waking up in a state of Janabah break my fast?',
+    answer: 'Waking up in a state of Janabah (e.g., a wet dream) does not always break your fast.',
+    rulings: [
+      {
+        type: 'detail',
+        label: 'Before Fajr',
+        text: 'If you realize you are in a state of Janabah before Fajr time, you must perform Ghusl al-Janabah (ritual bathing) before sunrise.',
+      },
+      {
+        type: 'exception',
+        label: 'Intentional Delay',
+        text: 'If you know you are in this state and intentionally wait until after Fajr time to bathe, your fast is invalid, and you must pay a Kaffarah.',
+      },
+      {
+        type: 'ruling',
+        label: 'Unintentional',
+        text: 'If you wake up after Fajr and realised you are Najis (impure from Janabah), your fasting is valid and this does not invalidate your fasting even without Ghusl, but you still need to do it before prayer.',
+      },
+    ],
   },
   {
     id: 'fiqh-4',
-    question: 'Can a traveler break their fast?',
-    answer: 'Yes, a traveler on a journey of at least 8 farsakh (approximately 44 km) may break their fast and make up the days later. However, it is often recommended to fast if the journey is not difficult.',
-    source: 'Kitab al-Sawm, Wasail al-Shia',
-    day: 4
+    topic: 'Injections & Vaccines',
+    question: 'Can I have a vaccine or injection whilst fasting?',
+    answer: 'Yes. Having any subcutaneous or intramuscular injections, or an intravenous line straight to the bloodstream, is permissible.',
+    rulings: [
+      {
+        type: 'exception',
+        label: 'Exception',
+        text: 'Pathways that take food straight to the stomach, such as a PEG tube or nasal gastric tube, are not permissible.',
+      },
+    ],
   },
   {
     id: 'fiqh-5',
-    question: 'What is the Kaffara (expiation) for breaking a fast intentionally?',
-    answer: 'For intentionally breaking a fast without valid excuse, one must either fast for 60 consecutive days, feed 60 poor people, or free a slave. The feeding should be approximately 750g of food per person.',
-    source: 'Tahdhib al-Ahkam, Kitab al-Sawm',
-    day: 5
-  }
+    topic: 'Traveling for Work',
+    question: 'If my work consists of travelling far distances, can I still fast?',
+    answer: 'Yes, provided you meet the criteria of a frequent traveler.',
+    rulings: [
+      {
+        type: 'detail',
+        label: 'Frequent Traveler Criteria',
+        text: 'You must travel out of your hometown either: 10 times each month for 6 months, OR 30 times within 3 months.',
+      },
+      {
+        type: 'ruling',
+        label: 'Definition of a Traveler',
+        text: 'A traveler is one who leaves their hometown/city and crosses the border by 8 farsakhs (approx. 44km total). This counts as either 44km one way or 22km going and 22km returning.',
+      },
+    ],
+  },
+  {
+    id: 'fiqh-6',
+    topic: 'Breaking the Fast & Penalties',
+    question: 'What is the penalty for breaking the fast, intentionally or unintentionally?',
+    answer: '',
+    rulings: [
+      {
+        type: 'exception',
+        label: 'Intentional (No Valid Reason)',
+        text: 'You must pay a Kaffarah. This involves feeding 60 poor people OR fasting for 60 consecutive days for each day missed.',
+      },
+      {
+        type: 'ruling',
+        label: 'Valid Reason',
+        text: 'You must pay a Fidya (approx. $3 to $4 per day). In addition, if you are able to fast later, you must make up (repeat) the missed days.',
+      },
+      {
+        type: 'important',
+        label: 'Important Note',
+        text: 'Please see alayn.com.au to organise your penalties and send them through.',
+        link: 'https://alayn.com.au',
+      },
+    ],
+  },
 ];
-
-export const akhlaqPoints: AkhlaqPoint[] = [
-  {
-    id: 'akhlaq-1',
-    title: 'Silence is Wisdom',
-    quote: 'The Prophet (saw) said: "Whoever is silent is saved."',
-    source: 'Bihar al-Anwar',
-    reflection: 'In Ramadan, let your silence be a form of worship. Guard your tongue from idle talk, backbiting, and argument.',
-    day: 1
-  },
-  {
-    id: 'akhlaq-2',
-    title: 'Patience in Hunger',
-    quote: 'Imam Ali (as) said: "Patience is of two kinds: patience over what pains you, and patience about what you love."',
-    source: 'Nahj al-Balagha',
-    reflection: 'Your hunger today connects you to those who hunger always. Let it breed compassion, not complaint.',
-    day: 2
-  },
-  {
-    id: 'akhlaq-3',
-    title: 'Generosity of Spirit',
-    quote: 'Imam Hassan (as) said: "Generosity is giving in prosperity and adversity."',
-    source: 'Bihar al-Anwar',
-    reflection: 'Ramadan is the month of generosity. Give not only from your wealth but from your time, your patience, and your forgiveness.',
-    day: 3
-  },
-  {
-    id: 'akhlaq-4',
-    title: 'Humility in Worship',
-    quote: 'Imam Sadiq (as) said: "The best of worship is humility."',
-    source: 'Al-Kafi',
-    reflection: 'When you pray, pray as if you see Allah. When you fast, fast with sincerity, not for show.',
-    day: 4
-  },
-  {
-    id: 'akhlaq-5',
-    title: 'Forgiveness',
-    quote: 'The Prophet (saw) said: "The best of you are those who forgive when they are angry."',
-    source: 'Bihar al-Anwar',
-    reflection: 'Use this blessed month to mend relationships. Forgive those who have wronged you, and seek forgiveness from those you have wronged.',
-    day: 5
-  }
-];
-
-export const understandingRamadan = {
-  title: 'Understanding Shahr Ramadan',
-  subtitle: 'The Month of the Quran',
-  introduction: `Ramadan is not merely abstinence. It is a covenant of nearness—fasting with the limbs, guarding the tongue, and turning the heart toward the Ahlul Bayt (as).`,
-  sheikhNasserResearch: `Sheikh Nasser's research emphasizes the triple movement: purification (tazkiyah), presence (muraqabah), and service (khidmah). The fast encompasses not only food and drink but sight, hearing, and thought.`,
-  quranicVerse: {
-    arabic: 'شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ هُدًى لِّلنَّاسِ وَبَيِّنَاتٍ مِّنَ الْهُدَىٰ وَالْفُرْقَانِ',
-    translation: 'The month of Ramadan in which was sent down the Quran, a guidance for mankind and clear proofs for the guidance and the criterion (between right and wrong).',
-    reference: 'Al-Baqarah 2:185'
-  },
-  hadith: {
-    text: 'The Messenger of Allah (saw) said: "The month of Ramadan is the month of Allah. The other months are the months of people."',
-    source: 'Bihar al-Anwar, Vol. 89'
-  }
-};
 
 export const levels = {
   1: {

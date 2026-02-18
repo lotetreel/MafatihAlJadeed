@@ -3,24 +3,14 @@ import { Link } from 'react-router-dom';
 import { PageTransition } from '@/components/PageTransition';
 import { CrescentDecoration } from '@/components/CrescentDecoration';
 import {
-  BookOpen,
   CalendarDays,
-  GraduationCap,
   ChevronRight,
   Sparkles,
-  Hand
+  Hand,
+  Scale
 } from 'lucide-react';
 
 const sections = [
-  {
-    id: 'understanding',
-    title: 'Understanding',
-    subtitle: 'Shahr Ramadan',
-    description: 'Discover the profound meaning of Ramadan through the Quran and teachings of Ahlul Bayt (as).',
-    icon: BookOpen,
-    path: '/understanding',
-    color: 'from-blue-500/20 to-blue-600/10',
-  },
   {
     id: 'aamal',
     title: 'Aamal & Dua',
@@ -40,13 +30,13 @@ const sections = [
     color: 'from-amber-500/20 to-amber-600/10',
   },
   {
-    id: 'education',
-    title: 'Education',
-    subtitle: 'Fiqh & Akhlaq',
-    description: 'Daily jurisprudence questions and ethical teachings to transform your character.',
-    icon: GraduationCap,
-    path: '/education',
-    color: 'from-purple-500/20 to-purple-600/10',
+    id: 'ramadhan-fiqh',
+    title: 'Month of Ramadhan Fiqh',
+    subtitle: 'Fasting Q&A Guide',
+    description: 'Practical jurisprudence Q&A covering common fasting questions, rulings, and penalties.',
+    icon: Scale,
+    path: '/ramadhan-fiqh',
+    color: 'from-blue-500/20 to-teal-600/10',
   },
 ];
 
