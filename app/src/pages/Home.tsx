@@ -143,7 +143,7 @@ export function Home() {
                 <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <Link
-                to="/calendar"
+                to="/aamal-dua"
                 className="px-8 py-4 rounded-xl border border-border/50 font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all"
               >
                 Explore the daily amaal and dua
