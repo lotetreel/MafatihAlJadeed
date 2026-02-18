@@ -1,0 +1,29 @@
+{
+  "title": "Recommendation of Suhoor (Pre-Dawn Meal)",
+  "id": "recommendation_of_suhoor_(pre-dawn_meal)",
+  "content_type": "amaal",
+  "level": "L1",
+  "description": "Emphasizing the importance of partaking in the pre-dawn meal, even if it is small, citing the Prophet's (s) narration that Allah and His angels bless those who eat Suhoor.",
+  "phrases": [
+    {
+      "arabic": "وقال صلى الله عليه و آله:",
+      "english": "And he (may Allah bless him and his family) said:",
+      "transliteration": "Wa qāla sallallāhu ‘alayhi wa ālihi:"
+    },
+    {
+      "arabic": "",
+      "english": "",
+      "transliteration": ""
+    },
+    {
+      "arabic": "إنّ اللَّهَ وَمَلائِكَتَهُ يُصَلُّونَ عَلَى الْمُسْتَغفِرينَ وَالْمُتَسَحِّرِيْنَ بِالْأَسْحارِ،",
+      "english": "Verily, Allah and His angels send blessings upon those who seek forgiveness and those who partake in the pre-dawn meal during the hours before dawn.",
+      "transliteration": "Innallāha wa malā’ikatahu yuṣallūna ‘alal-mustaghfirīna wal-mutasaḥḥirīna bil-asḥār."
+    },
+    {
+      "arabic": "فَتَسَحَّرُوا وَلَوْ بِجُرَع مِن الماءِ»(1).",
+      "english": "Partake of the pre-dawn meal, even if it be with but a few sips of water.",
+      "transliteration": "Fa-tasahharū walaw bi-jura‘in mina al-mā’. (1)"
+    }
+  ]
+}
