@@ -346,28 +346,37 @@ export function AamalDua() {
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Mobile Filter Buttons */}
             <div className="lg:hidden flex gap-3 mb-2 sticky top-24 z-20 bg-background/80 backdrop-blur-md py-3 -mt-6 border-b border-border/50">
-              <button
-                onClick={() => setIsLevelDrawerOpen(true)}
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-secondary/80 border border-border/50 text-sm font-medium hover:bg-secondary transition-colors"
-              >
-                <SlidersHorizontal className="w-4 h-4 text-[hsl(var(--primary))]" />
-                Level {maxLevel}
-              </button>
+              {(() => {
+                const config = {
+                  1: { name: 'Essential', color: 'emerald', icon: '✦' },
+                  2: { name: 'Striver', color: 'blue', icon: '★' },
+                  3: { name: 'Wayfarer', color: 'amber', icon: '♔' },
+                }[maxLevel as 1 | 2 | 3];
 
-              {availableTimings.length > 0 && (
-                <button
-                  onClick={() => setIsTimeDrawerOpen(true)}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-secondary/80 border border-border/50 text-sm font-medium hover:bg-secondary transition-colors relative"
-                >
-                  <Filter className="w-4 h-4 text-[hsl(var(--primary))]" />
-                  Filters
-                  {selectedTimings.length > 0 && (
-                    <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[hsl(var(--primary))] text-primary-foreground text-[10px] font-bold flex items-center justify-center shadow-sm">
-                      {selectedTimings.length}
-                    </span>
-                  )}
-                </button>
-              )}
+                return (
+                  <button
+                    onClick={() => setIsLevelDrawerOpen(true)}
+                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border text-sm font-medium transition-colors shadow-sm
+                      ${maxLevel === 1 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20' :
+                        maxLevel === 2 ? 'bg-blue-500/10 border-blue-500/30 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20' :
+                          'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20'}`}
+                  >
+                    <span>{config.icon}</span>
+                    {config.name}
+                  </button>
+                );
+              })()}
+
+              <button
+                onClick={() => setIsTimeDrawerOpen(true)}
+                className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border text-sm font-medium transition-colors relative shadow-sm
+                  ${selectedTimings.length > 0
+                    ? 'bg-[hsl(var(--primary))]/10 border-[hsl(var(--primary))]/30 text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/20'
+                    : 'bg-secondary/80 border-border/50 hover:bg-secondary text-foreground'}`}
+              >
+                <Filter className="w-4 h-4" />
+                {selectedTimings.length > 0 ? `${selectedTimings.length} Selected` : 'Any Time'}
+              </button>
             </div>
 
             {/* Sidebar (Left Column) - Desktop Only */}
