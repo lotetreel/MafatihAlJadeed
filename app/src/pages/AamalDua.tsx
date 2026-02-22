@@ -265,36 +265,18 @@ export function AamalDua() {
               </span>
             )}
             {/* Type badge */}
-            <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap ${item.type === 'dua'
-              ? 'bg-indigo-500/20 text-indigo-400'
-              : 'bg-amber-500/20 text-amber-400'
-              }`}>
-              {item.type === 'dua' ? 'Dua' : "A'mal"}
-            </span>
             {/* Level badge */}
             <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap ${item.level === 1 ? 'bg-emerald-500/20 text-emerald-400' :
               item.level === 2 ? 'bg-blue-500/20 text-blue-400' :
-                'bg-purple-500/20 text-purple-400'
+                'bg-amber-500/20 text-amber-400'
               }`}>
               L{item.level}
             </span>
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-0.5">{item.name}</h3>
-        <p className="arabic text-sm text-muted-foreground mb-3">{item.arabicName}</p>
-
-        {/* Show timing for a'amal */}
-        {'timing' in item && item.timing && Array.isArray(item.timing) && item.timing.length > 0 && (
-          <div className="flex flex-wrap items-center gap-1.5 mb-3">
-            {item.timing.map(t => (
-              <span key={t} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-secondary/80 text-xs text-muted-foreground border border-border/50">
-                <Clock3 className="w-3 h-3 opacity-70" />
-                {t}
-              </span>
-            ))}
-          </div>
-        )}
+        <h3 className="text-base font-semibold mb-0.5 leading-tight">{item.name}</h3>
+        <p className="arabic text-sm text-muted-foreground mb-4">{item.arabicName}</p>
 
         <div className="flex-grow">
           <ExpandableDescription text={item.description} />
@@ -356,56 +338,99 @@ export function AamalDua() {
           {/* Main Content - Two Column Layout */}
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Left Column - Level Selection & Day Selector */}
+            {/* Sidebar (Left Column) */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="lg:w-80 xl:w-96 flex-shrink-0 space-y-6"
+              className="lg:w-64 xl:w-72 flex-shrink-0 space-y-8 lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto no-scrollbar pb-10"
             >
-              {/* Compact Level Toggle */}
-              <div className="flex items-center gap-1 p-1 rounded-lg bg-secondary/50 border border-border/50">
-                {([1, 2, 3] as const).map((level) => {
-                  const config = {
-                    1: { name: 'Essential', color: 'emerald', icon: '✦' },
-                    2: { name: 'Striver', color: 'blue', icon: '★' },
-                    3: { name: 'Wayfarer', color: 'amber', icon: '♔' },
-                  }[level];
+              {/* Practice Level */}
+              <div>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3 ml-1">Practice Level</h3>
+                <div className="flex flex-col gap-1.5">
+                  {([1, 2, 3] as const).map((level) => {
+                    const config = {
+                      1: { name: 'Essential', color: 'emerald', icon: '✦', desc: 'Core practices' },
+                      2: { name: 'Striver', color: 'blue', icon: '★', desc: 'Recommended additions' },
+                      3: { name: 'Wayfarer', color: 'amber', icon: '♔', desc: 'Comprehensive path' },
+                    }[level];
 
-                  const isActive = maxLevel >= level;
-                  const isSelected = maxLevel === level;
+                    const isActive = maxLevel >= level;
+                    const isSelected = maxLevel === level;
 
-                  return (
-                    <button
-                      key={level}
-                      onClick={() => setMaxLevel(level)}
-                      className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 flex items-center gap-1.5 ${isSelected
-                        ? `bg-${config.color}-500/20 text-${config.color}-400 border border-${config.color}-500/30`
-                        : isActive
-                          ? 'text-muted-foreground hover:bg-secondary/80'
-                          : 'text-muted-foreground/50 hover:text-muted-foreground hover:bg-secondary/80'
-                        }`}
-                      style={isSelected ? {
-                        backgroundColor: config.color === 'emerald' ? 'rgba(16, 185, 129, 0.2)' :
-                          config.color === 'blue' ? 'rgba(59, 130, 246, 0.2)' :
-                            'rgba(245, 158, 11, 0.2)',
-                        color: config.color === 'emerald' ? 'rgb(52, 211, 153)' :
-                          config.color === 'blue' ? 'rgb(96, 165, 250)' :
-                            'rgb(251, 191, 36)',
-                        borderColor: config.color === 'emerald' ? 'rgba(16, 185, 129, 0.3)' :
-                          config.color === 'blue' ? 'rgba(59, 130, 246, 0.3)' :
-                            'rgba(245, 158, 11, 0.3)',
-                      } : {}}
-                    >
-                      <span>{config.icon}</span>
-                      <span>{config.name}</span>
-                    </button>
-                  );
-                })}
+                    return (
+                      <button
+                        key={level}
+                        onClick={() => setMaxLevel(level)}
+                        className={`w-full px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 flex items-center justify-between group ${isSelected
+                          ? `border`
+                          : isActive
+                            ? 'bg-secondary/40 text-foreground hover:bg-secondary border border-border/30'
+                            : 'bg-transparent text-muted-foreground hover:bg-secondary/50 border border-transparent'
+                          }`}
+                        style={isSelected ? {
+                          backgroundColor: config.color === 'emerald' ? 'rgba(16, 185, 129, 0.1)' :
+                            config.color === 'blue' ? 'rgba(59, 130, 246, 0.1)' :
+                              'rgba(245, 158, 11, 0.1)',
+                          color: config.color === 'emerald' ? 'rgb(52, 211, 153)' :
+                            config.color === 'blue' ? 'rgb(96, 165, 250)' :
+                              'rgb(251, 191, 36)',
+                          borderColor: config.color === 'emerald' ? 'rgba(16, 185, 129, 0.3)' :
+                            config.color === 'blue' ? 'rgba(59, 130, 246, 0.3)' :
+                              'rgba(245, 158, 11, 0.3)',
+                        } : {}}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className={`${isSelected ? 'scale-110' : 'opacity-70 group-hover:opacity-100'} transition-all`}>{config.icon}</span>
+                          <div className="flex flex-col items-start leading-tight">
+                            <span>{config.name}</span>
+                            {isSelected && <span className="text-[10px] opacity-70 font-normal mt-0.5">{config.desc}</span>}
+                          </div>
+                        </div>
+                        {isSelected && <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'currentColor' }} />}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
+              {/* Timing Filters Bar */}
+              {availableTimings.length > 0 && (
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3 ml-1">Filter by Time</h3>
+                  <div className="flex flex-col gap-1.5">
+                    {availableTimings.map(timing => {
+                      const isSelected = selectedTimings.includes(timing);
+                      return (
+                        <button
+                          key={timing}
+                          onClick={() => toggleTimingFilter(timing)}
+                          className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 w-full ${isSelected
+                            ? 'bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] border border-[hsl(var(--primary))]/30'
+                            : 'bg-transparent text-muted-foreground hover:bg-secondary/50 border border-transparent hover:border-border/30'
+                            }`}
+                        >
+                          <span className={`${isSelected ? 'opacity-100' : 'opacity-60'} transition-opacity`}>
+                            {getTimingIcon(timing)}
+                          </span>
+                          <span className="text-left leading-tight">{timing}</span>
+                        </button>
+                      );
+                    })}
 
-
-
+                    {/* Clear Filters Button */}
+                    {selectedTimings.length > 0 && (
+                      <button
+                        onClick={() => setSelectedTimings([])}
+                        className="mt-2 text-xs font-medium text-muted-foreground hover:text-[hsl(var(--primary))] transition-colors w-full text-left ml-4 flex items-center gap-1.5"
+                      >
+                        Clear filters
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
             </motion.div>
 
             {/* Right Column - Items Grid */}
@@ -418,64 +443,15 @@ export function AamalDua() {
               {/* Section header and Timing Filters */}
               <div className="mb-8">
                 <div className="flex items-center justify-between flex-wrap gap-4 mb-5">
-                  <div>
-                    <h2 className="text-2xl font-semibold mb-1">
+                  <div className="flex items-center gap-3">
+                    <h2 className="text-2xl font-semibold">
                       Practices
                     </h2>
-                    <p className="text-muted-foreground">
-                      Showing {filteredItems.length} {filteredItems.length === 1 ? 'practice' : 'practices'}
-                    </p>
-                  </div>
-
-                  {/* Quick stats */}
-                  <div className="flex gap-4 text-sm bg-secondary/30 px-4 py-2 rounded-xl border border-border/40">
-                    <div className="flex items-center gap-2 font-medium">
-                      <Sun className="w-4 h-4 text-amber-500" />
-                      <span>{filteredItems.filter(i => i.type === 'aamal').length} A'amal</span>
-                    </div>
-                    <div className="flex items-center gap-2 font-medium">
-                      <BookOpen className="w-4 h-4 text-indigo-400" />
-                      <span>{filteredItems.filter(i => i.type === 'dua').length} Duas</span>
-                    </div>
+                    <span className="text-sm font-medium px-2.5 py-0.5 rounded-full bg-secondary text-muted-foreground border border-border/40">
+                      {filteredItems.length}
+                    </span>
                   </div>
                 </div>
-
-                {/* Timing Filters Bar */}
-                {availableTimings.length > 0 && (
-                  <div className="p-1 mb-2">
-                    <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider mb-2 ml-1">Filter by Time</p>
-                    <div className="flex flex-wrap gap-2">
-                      {availableTimings.map(timing => {
-                        const isSelected = selectedTimings.includes(timing);
-                        return (
-                          <button
-                            key={timing}
-                            onClick={() => toggleTimingFilter(timing)}
-                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${isSelected
-                              ? 'bg-[hsl(var(--primary))] text-primary-foreground shadow-md shadow-primary/20 scale-[1.02]'
-                              : 'bg-secondary/60 text-muted-foreground hover:bg-secondary border border-border/40 hover:border-border'
-                              }`}
-                          >
-                            <span className={isSelected ? 'text-primary-foreground' : ''}>
-                              {getTimingIcon(timing)}
-                            </span>
-                            {timing}
-                          </button>
-                        );
-                      })}
-
-                      {/* Clear Filters Button */}
-                      {selectedTimings.length > 0 && (
-                        <button
-                          onClick={() => setSelectedTimings([])}
-                          className="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                          Clear
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                )}
               </div>
 
               {/* Content Groups */}
