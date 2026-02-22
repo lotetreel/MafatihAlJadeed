@@ -20,7 +20,6 @@ import {
   Sparkles,
   Clock3,
   Filter,
-  SlidersHorizontal,
   X
 } from 'lucide-react';
 import { Drawer } from 'vaul';
