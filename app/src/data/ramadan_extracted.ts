@@ -16,6 +16,7 @@ export interface Dua {
   source: string;
   applicableDays: 'all' | number[];
   type: 'dua';
+  timing?: string[];
   // Content can be either phrased or block text
   phrases?: Phrase[];
   arabicText?: string;
@@ -34,7 +35,7 @@ export interface Aamal {
   source: string;
   applicableDays: 'all' | number[];
   type: 'aamal';
-  timing?: string;
+  timing?: string[];
   instructions?: string[];
   // Content
   phrases?: Phrase[];

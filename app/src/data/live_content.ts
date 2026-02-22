@@ -8,6 +8,7 @@ interface RawJsonData {
     level?: string | number;
     source?: string;
     applicable_days?: 'all' | number[];
+    timing?: string[];
     phrases?: Phrase[];
     content_type?: string;
     preamble?: string | { english: string; arabic?: string };
@@ -76,6 +77,7 @@ for (const path in modules) {
             applicableDays: data.applicable_days || 'all',
             phrases: data.phrases || [],
             type: type,
+            timing: data.timing || [],
             preamble: preamble
         };
 

@@ -14,7 +14,11 @@ import {
   Moon,
   Sun,
   CalendarDays,
-  ChevronDown
+  ChevronDown,
+  Sunrise,
+  Sunset,
+  Sparkles,
+  Clock3
 } from 'lucide-react';
 
 // Combined item type for display
@@ -26,7 +30,7 @@ interface CombinedItem {
   level: 1 | 2 | 3;
   source: string;
   type: 'dua' | 'aamal';
-  timing?: string;
+  timing?: string[];
   applicableDays: 'all' | number[];
   arabicText?: string;
   englishTranslation?: string;
@@ -84,6 +88,9 @@ const contentOrder = contentOrderRaw as string[];
 
 export function AamalDua() {
   const navigate = useNavigate();
+  // Filter state
+  const [selectedTimings, setSelectedTimings] = useState<string[]>([]);
+
   // maxLevel is cumulative - shows all items from level 1 up to maxLevel
   const [maxLevel, setMaxLevel] = useState<number>(() => {
     const saved = localStorage.getItem('user_level');
@@ -133,8 +140,187 @@ export function AamalDua() {
   }, [allItems, maxLevel]);
 
   // Separate for stats display
-  const filteredDuas = filteredItems.filter(item => item.type === 'dua');
-  const filteredAamal = filteredItems.filter(item => item.type === 'aamal');
+  // Extract unique timing tags from all available items
+  const availableTimings = useMemo(() => {
+    const timings = new Set<string>();
+    filteredItems.forEach(item => {
+      if (item.timing && Array.isArray(item.timing)) {
+        item.timing.forEach(t => timings.add(t));
+      }
+    });
+
+    // Sort them in a logical daily order if possible, otherwise alphabetically
+    const logicalOrder = ["Suhoor", "Days of Shahr Ramadhan", "Iftar", "After Every Obligatory Prayer", "Nights of Shahr Ramadan"];
+    return Array.from(timings).sort((a, b) => {
+      const indexA = logicalOrder.indexOf(a);
+      const indexB = logicalOrder.indexOf(b);
+      if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+      if (indexA !== -1) return -1;
+      if (indexB !== -1) return 1;
+      return a.localeCompare(b);
+    });
+  }, [filteredItems]);
+
+  const toggleTimingFilter = (timing: string) => {
+    setSelectedTimings(prev =>
+      prev.includes(timing)
+        ? []
+        : [timing]
+    );
+  };
+
+  // Group items by their timing (for the grouped view)
+  const groupedItems = useMemo(() => {
+    const groups: Record<string, CombinedItem[]> = {};
+
+    // Create an "Untagged" group for items without timing
+    const untagged: CombinedItem[] = [];
+
+    filteredItems.forEach(item => {
+      // If filters are active, only include items that match the selected filters
+      if (selectedTimings.length > 0) {
+        if (!item.timing || !Array.isArray(item.timing) || !item.timing.some(t => selectedTimings.includes(t))) {
+          return; // Skip this item as it doesn't match selected filters
+        }
+      }
+
+      if (!item.timing || !Array.isArray(item.timing) || item.timing.length === 0) {
+        untagged.push(item);
+      } else {
+        item.timing.forEach(t => {
+          // If filters are active, only add to the groups that are selected
+          if (selectedTimings.length > 0 && !selectedTimings.includes(t)) {
+            return;
+          }
+          if (!groups[t]) groups[t] = [];
+          if (!groups[t].find(i => i.id === item.id)) {
+            groups[t].push(item);
+          }
+        });
+      }
+    });
+
+    // If grouping, sort the items inside each group by global order
+    Object.keys(groups).forEach(key => {
+      groups[key].sort((a, b) => {
+        const indexA = contentOrder.indexOf(a.id);
+        const indexB = contentOrder.indexOf(b.id);
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        if (indexA !== -1) return -1;
+        if (indexB !== -1) return 1;
+        return a.type === 'aamal' ? -1 : 1;
+      });
+    });
+
+    return { groups, untagged };
+  }, [filteredItems, selectedTimings]);
+
+  // Helper to get an icon for common timings
+  const getTimingIcon = (timing: string) => {
+    const lowered = timing.toLowerCase();
+    if (lowered.includes('suhoor')) return <Sunrise className="w-5 h-5 text-amber-500" />;
+    if (lowered.includes('iftar')) return <Sunset className="w-5 h-5 text-orange-500" />;
+    if (lowered.includes('night')) return <Moon className="w-5 h-5 text-indigo-400" />;
+    if (lowered.includes('day')) return <Sun className="w-5 h-5 text-yellow-400" />;
+    if (lowered.includes('prayer')) return <Clock3 className="w-5 h-5 text-emerald-500" />;
+    return <Sparkles className="w-5 h-5 text-primary" />;
+  };
+
+  // Helper component to render a single item card
+  const renderItemCard = (item: CombinedItem) => (
+    <motion.div
+      key={item.id}
+      layout
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{
+        layout: { type: "spring", stiffness: 300, damping: 30 },
+        opacity: { duration: 0.2 },
+        scale: { duration: 0.2 }
+      }}
+    >
+      <SwipeableItem
+        isCompleted={isCompleted(item.id)}
+        onToggle={() => toggleComplete(item.id)}
+        className="glass-card p-5 hover-lift group cursor-pointer h-full flex flex-col"
+        onClick={() => navigate(`/aamal-dua/${item.id}`)}
+      >
+        <div className="flex items-start justify-between mb-3 pr-10">
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${item.type === 'dua'
+            ? 'bg-indigo-500/20'
+            : 'bg-amber-500/20'
+            }`}>
+            {item.type === 'dua' ? (
+              <BookOpen className="w-5 h-5 text-indigo-400" />
+            ) : (
+              <Clock className="w-5 h-5 text-amber-400" />
+            )}
+          </div>
+          <div className="flex flex-wrap items-center justify-end gap-1.5 ml-2">
+            {/* Day-specific badge */}
+            {item.applicableDays !== 'all' && (
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[hsl(var(--primary))]/20 text-[hsl(var(--primary))] whitespace-nowrap">
+                Day {item.applicableDays.join(', ')}
+              </span>
+            )}
+            {/* Type badge */}
+            <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap ${item.type === 'dua'
+              ? 'bg-indigo-500/20 text-indigo-400'
+              : 'bg-amber-500/20 text-amber-400'
+              }`}>
+              {item.type === 'dua' ? 'Dua' : "A'mal"}
+            </span>
+            {/* Level badge */}
+            <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap ${item.level === 1 ? 'bg-emerald-500/20 text-emerald-400' :
+              item.level === 2 ? 'bg-blue-500/20 text-blue-400' :
+                'bg-purple-500/20 text-purple-400'
+              }`}>
+              L{item.level}
+            </span>
+          </div>
+        </div>
+
+        <h3 className="text-base font-semibold mb-0.5">{item.name}</h3>
+        <p className="arabic text-sm text-muted-foreground mb-3">{item.arabicName}</p>
+
+        {/* Show timing for a'amal */}
+        {'timing' in item && item.timing && Array.isArray(item.timing) && item.timing.length > 0 && (
+          <div className="flex flex-wrap items-center gap-1.5 mb-3">
+            {item.timing.map(t => (
+              <span key={t} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-secondary/80 text-xs text-muted-foreground border border-border/50">
+                <Clock3 className="w-3 h-3 opacity-70" />
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div className="flex-grow">
+          <ExpandableDescription text={item.description} />
+        </div>
+
+        <div className="mt-4 pt-3 border-t border-border/30 flex items-center justify-end shrink-0">
+          <div className="flex items-center gap-1 text-xs text-[hsl(var(--primary))] font-medium">
+            <span>View Full Details</span>
+            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-all" />
+          </div>
+        </div>
+      </SwipeableItem>
+    </motion.div>
+  );
+
+  const logicalOrderKeys = ["Suhoor", "Days of Shahr Ramadhan", "Iftar", "After Every Obligatory Prayer", "Nights of Shahr Ramadan"];
+  const sortedGroupKeys = Object.keys(groupedItems.groups).sort((a, b) => {
+    const indexA = logicalOrderKeys.indexOf(a);
+    const indexB = logicalOrderKeys.indexOf(b);
+    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+    if (indexA !== -1) return -1;
+    if (indexB !== -1) return 1;
+    return a.localeCompare(b);
+  });
+
+  const isFilteredEmpty = Object.keys(groupedItems.groups).length === 0 && groupedItems.untagged.length === 0;
 
 
 
@@ -229,9 +415,9 @@ export function AamalDua() {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="flex-1"
             >
-              {/* Section header */}
-              <div className="mb-6">
-                <div className="flex items-center justify-between flex-wrap gap-4">
+              {/* Section header and Timing Filters */}
+              <div className="mb-8">
+                <div className="flex items-center justify-between flex-wrap gap-4 mb-5">
                   <div>
                     <h2 className="text-2xl font-semibold mb-1">
                       Practices
@@ -242,105 +428,112 @@ export function AamalDua() {
                   </div>
 
                   {/* Quick stats */}
-                  <div className="flex gap-4 text-sm">
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Sun className="w-4 h-4 text-amber-400" />
-                      <span>{filteredAamal.length} A'amal</span>
+                  <div className="flex gap-4 text-sm bg-secondary/30 px-4 py-2 rounded-xl border border-border/40">
+                    <div className="flex items-center gap-2 font-medium">
+                      <Sun className="w-4 h-4 text-amber-500" />
+                      <span>{filteredItems.filter(i => i.type === 'aamal').length} A'amal</span>
                     </div>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Moon className="w-4 h-4 text-indigo-400" />
-                      <span>{filteredDuas.length} Duas</span>
+                    <div className="flex items-center gap-2 font-medium">
+                      <BookOpen className="w-4 h-4 text-indigo-400" />
+                      <span>{filteredItems.filter(i => i.type === 'dua').length} Duas</span>
                     </div>
                   </div>
                 </div>
+
+                {/* Timing Filters Bar */}
+                {availableTimings.length > 0 && (
+                  <div className="p-1 mb-2">
+                    <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider mb-2 ml-1">Filter by Time</p>
+                    <div className="flex flex-wrap gap-2">
+                      {availableTimings.map(timing => {
+                        const isSelected = selectedTimings.includes(timing);
+                        return (
+                          <button
+                            key={timing}
+                            onClick={() => toggleTimingFilter(timing)}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${isSelected
+                              ? 'bg-[hsl(var(--primary))] text-primary-foreground shadow-md shadow-primary/20 scale-[1.02]'
+                              : 'bg-secondary/60 text-muted-foreground hover:bg-secondary border border-border/40 hover:border-border'
+                              }`}
+                          >
+                            <span className={isSelected ? 'text-primary-foreground' : ''}>
+                              {getTimingIcon(timing)}
+                            </span>
+                            {timing}
+                          </button>
+                        );
+                      })}
+
+                      {/* Clear Filters Button */}
+                      {selectedTimings.length > 0 && (
+                        <button
+                          onClick={() => setSelectedTimings([])}
+                          className="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          Clear
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* Content Grid */}
+              {/* Content Groups */}
               <AnimatePresence mode="popLayout">
-                {filteredItems.length > 0 ? (
-                  <motion.div
-                    layout
-                    className="grid grid-cols-1 xl:grid-cols-2 gap-4"
-                  >
-                    <AnimatePresence mode="popLayout">
-                      {filteredItems.map((item) => (
-                        <motion.div
-                          key={item.id}
-                          layout
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.8 }}
-                          transition={{
-                            layout: { type: "spring", stiffness: 300, damping: 30 },
-                            opacity: { duration: 0.2 },
-                            scale: { duration: 0.2 }
-                          }}
-                        >
-                          <SwipeableItem
-                            isCompleted={isCompleted(item.id)}
-                            onToggle={() => toggleComplete(item.id)}
-                            className="glass-card p-5 hover-lift group cursor-pointer"
-                            onClick={() => navigate(`/aamal-dua/${item.id}`)}
-                          >
-                            <div className="flex items-start justify-between mb-3 pr-10">
-                              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${item.type === 'dua'
-                                ? 'bg-indigo-500/20'
-                                : 'bg-amber-500/20'
-                                }`}>
-                                {item.type === 'dua' ? (
-                                  <BookOpen className="w-5 h-5 text-indigo-400" />
-                                ) : (
-                                  <Clock className="w-5 h-5 text-amber-400" />
-                                )}
-                              </div>
-                              <div className="flex items-center gap-1.5">
-                                {/* Day-specific badge */}
-                                {item.applicableDays !== 'all' && (
-                                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[hsl(var(--primary))]/20 text-[hsl(var(--primary))]">
-                                    Day {item.applicableDays.join(', ')}
-                                  </span>
-                                )}
-                                {/* Type badge */}
-                                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${item.type === 'dua'
-                                  ? 'bg-indigo-500/20 text-indigo-400'
-                                  : 'bg-amber-500/20 text-amber-400'
-                                  }`}>
-                                  {item.type === 'dua' ? 'Dua' : "A'mal"}
-                                </span>
-                                {/* Level badge */}
-                                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${item.level === 1 ? 'bg-emerald-500/20 text-emerald-400' :
-                                  item.level === 2 ? 'bg-blue-500/20 text-blue-400' :
-                                    'bg-purple-500/20 text-purple-400'
-                                  }`}>
-                                  L{item.level}
-                                </span>
-                              </div>
-                            </div>
+                {!isFilteredEmpty ? (
+                  <div className="space-y-12">
+                    {/* Render Grouped Items */}
+                    {sortedGroupKeys.map(timing => (
+                      <motion.div
+                        key={timing}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="space-y-4"
+                      >
+                        <div className="flex items-center gap-3 border-b border-border/40 pb-2">
+                          <div className="p-2 rounded-lg bg-secondary/50 shadow-sm border border-border/30">
+                            {getTimingIcon(timing)}
+                          </div>
+                          <h3 className="text-xl font-semibold">{timing}</h3>
+                          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-secondary text-muted-foreground ml-auto">
+                            {groupedItems.groups[timing].length}
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                          <AnimatePresence mode="popLayout">
+                            {groupedItems.groups[timing].map(renderItemCard)}
+                          </AnimatePresence>
+                        </div>
+                      </motion.div>
+                    ))}
 
-                            <h3 className="text-base font-semibold mb-0.5">{item.name}</h3>
-                            <p className="arabic text-sm text-muted-foreground mb-2">{item.arabicName}</p>
-
-                            {/* Show timing for a'amal */}
-                            {'timing' in item && item.timing && (
-                              <div className="flex items-center gap-2 mb-2">
-                                <Clock className="w-3.5 h-3.5 text-muted-foreground" />
-                                <span className="text-xs text-muted-foreground">{item.timing}</span>
-                              </div>
-                            )}
-
-                            <ExpandableDescription text={item.description} />
-
-                            <div className="mt-3 pt-3 border-t border-border/30 flex items-center justify-end">
-                              <div className="flex items-center gap-1 text-xs text-[hsl(var(--primary))]">
-                                <span>View Full</span>
-                                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-all" />
-                              </div>
-                            </div>
-                          </SwipeableItem>
-                        </motion.div>
-                      ))}
-                    </AnimatePresence>
-                  </motion.div>
+                    {/* Render Untagged Items */}
+                    {groupedItems.untagged.length > 0 && (
+                      <motion.div
+                        key="untagged"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="space-y-4"
+                      >
+                        <div className="flex items-center gap-3 border-b border-border/40 pb-2">
+                          <div className="p-2 rounded-lg bg-secondary/50 shadow-sm border border-border/30">
+                            <BookOpen className="w-5 h-5 text-muted-foreground" />
+                          </div>
+                          <h3 className="text-xl font-semibold opacity-80">Other Practices</h3>
+                          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-secondary text-muted-foreground ml-auto">
+                            {groupedItems.untagged.length}
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                          <AnimatePresence mode="popLayout">
+                            {groupedItems.untagged.map(renderItemCard)}
+                          </AnimatePresence>
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
                 ) : (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
