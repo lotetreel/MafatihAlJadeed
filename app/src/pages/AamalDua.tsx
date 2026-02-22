@@ -18,8 +18,12 @@ import {
   Sunrise,
   Sunset,
   Sparkles,
-  Clock3
+  Clock3,
+  Filter,
+  SlidersHorizontal,
+  X
 } from 'lucide-react';
+import { Drawer } from 'vaul';
 
 // Combined item type for display
 interface CombinedItem {
@@ -96,6 +100,9 @@ export function AamalDua() {
     const saved = localStorage.getItem('user_level');
     return saved ? parseInt(saved) : 1;
   });
+
+  const [isLevelDrawerOpen, setIsLevelDrawerOpen] = useState(false);
+  const [isTimeDrawerOpen, setIsTimeDrawerOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('user_level', maxLevel.toString());
@@ -337,13 +344,38 @@ export function AamalDua() {
 
           {/* Main Content - Two Column Layout */}
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Left Column - Level Selection & Day Selector */}
-            {/* Sidebar (Left Column) */}
+            {/* Mobile Filter Buttons */}
+            <div className="lg:hidden flex gap-3 mb-2 sticky top-24 z-20 bg-background/80 backdrop-blur-md py-3 -mt-6 border-b border-border/50">
+              <button
+                onClick={() => setIsLevelDrawerOpen(true)}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-secondary/80 border border-border/50 text-sm font-medium hover:bg-secondary transition-colors"
+              >
+                <SlidersHorizontal className="w-4 h-4 text-[hsl(var(--primary))]" />
+                Level {maxLevel}
+              </button>
+
+              {availableTimings.length > 0 && (
+                <button
+                  onClick={() => setIsTimeDrawerOpen(true)}
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-secondary/80 border border-border/50 text-sm font-medium hover:bg-secondary transition-colors relative"
+                >
+                  <Filter className="w-4 h-4 text-[hsl(var(--primary))]" />
+                  Filters
+                  {selectedTimings.length > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[hsl(var(--primary))] text-primary-foreground text-[10px] font-bold flex items-center justify-center shadow-sm">
+                      {selectedTimings.length}
+                    </span>
+                  )}
+                </button>
+              )}
+            </div>
+
+            {/* Sidebar (Left Column) - Desktop Only */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="lg:w-64 xl:w-72 flex-shrink-0 space-y-8 lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto no-scrollbar pb-10"
+              className="hidden lg:block lg:w-64 xl:w-72 flex-shrink-0 space-y-8 lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto no-scrollbar pb-10"
             >
               {/* Practice Level */}
               <div>
@@ -534,10 +566,149 @@ export function AamalDua() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
-                className="text-center text-sm text-muted-foreground mt-8"
+                className="text-center text-sm text-muted-foreground mt-8 hidden lg:block"
               >
                 💡 Tip: Swipe right to mark as complete, or click the check button
               </motion.p>
+
+              {/* Mobile Mobile Drawers */}
+              <style>{`
+                [data-vaul-drawer] { border-radius: 24px 24px 0 0; }
+                [data-vaul-drawer]::after { display: none; }
+              `}</style>
+
+              {/* Practice Level Drawer */}
+              <Drawer.Root open={isLevelDrawerOpen} onOpenChange={setIsLevelDrawerOpen}>
+                <Drawer.Portal>
+                  <Drawer.Overlay className="fixed inset-0 bg-black/40 z-50 backdrop-blur-sm" onClick={() => setIsLevelDrawerOpen(false)} />
+                  <Drawer.Content className="bg-background flex flex-col rounded-t-[24px] mt-24 fixed bottom-0 left-0 right-0 z-50 p-6 pb-12 outline-none border-t border-border shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.2)]">
+                    <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-muted mb-8" />
+
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="text-xl font-bold">Practice Level</h3>
+                      <button onClick={() => setIsLevelDrawerOpen(false)} className="p-2 rounded-full hover:bg-secondary/80 text-muted-foreground transition-colors">
+                        <X className="w-5 h-5" />
+                      </button>
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                      {([1, 2, 3] as const).map((level) => {
+                        const config = {
+                          1: { name: 'Essential', color: 'emerald', icon: '✦', desc: 'Core practices for everyday' },
+                          2: { name: 'Striver', color: 'blue', icon: '★', desc: 'Recommended additional aamal' },
+                          3: { name: 'Wayfarer', color: 'amber', icon: '♔', desc: 'Comprehensive spiritual path' },
+                        }[level];
+
+                        const isActive = maxLevel >= level;
+                        const isSelected = maxLevel === level;
+
+                        return (
+                          <button
+                            key={level}
+                            onClick={() => {
+                              setMaxLevel(level);
+                              setTimeout(() => setIsLevelDrawerOpen(false), 200);
+                            }}
+                            className={`w-full px-5 py-4 rounded-2xl text-base font-medium transition-all duration-200 flex items-center justify-between group ${isSelected
+                              ? `border shadow-sm`
+                              : isActive
+                                ? 'bg-secondary/50 text-foreground hover:bg-secondary border border-border/30'
+                                : 'bg-transparent text-muted-foreground hover:bg-secondary/50 border border-transparent'
+                              }`}
+                            style={isSelected ? {
+                              backgroundColor: config.color === 'emerald' ? 'rgba(16, 185, 129, 0.1)' :
+                                config.color === 'blue' ? 'rgba(59, 130, 246, 0.1)' :
+                                  'rgba(245, 158, 11, 0.1)',
+                              color: config.color === 'emerald' ? 'rgb(52, 211, 153)' :
+                                config.color === 'blue' ? 'rgb(96, 165, 250)' :
+                                  'rgb(251, 191, 36)',
+                              borderColor: config.color === 'emerald' ? 'rgba(16, 185, 129, 0.3)' :
+                                config.color === 'blue' ? 'rgba(59, 130, 246, 0.3)' :
+                                  'rgba(245, 158, 11, 0.3)',
+                            } : {}}
+                          >
+                            <div className="flex items-center gap-4">
+                              <span className={`text-xl ${isSelected ? 'scale-110' : 'opacity-70'} transition-transform`}>{config.icon}</span>
+                              <div className="flex flex-col items-start leading-tight">
+                                <span className="font-semibold">{config.name}</span>
+                                <span className="text-xs opacity-70 font-normal mt-1">{config.desc}</span>
+                              </div>
+                            </div>
+                            {isSelected && <div className="w-2.5 h-2.5 rounded-full shadow-sm" style={{ backgroundColor: 'currentColor' }} />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </Drawer.Content>
+                </Drawer.Portal>
+              </Drawer.Root>
+
+              {/* Timing Filter Drawer */}
+              <Drawer.Root open={isTimeDrawerOpen} onOpenChange={setIsTimeDrawerOpen}>
+                <Drawer.Portal>
+                  <Drawer.Overlay className="fixed inset-0 bg-black/40 z-50 backdrop-blur-sm" onClick={() => setIsTimeDrawerOpen(false)} />
+                  <Drawer.Content className="bg-background flex flex-col rounded-t-[24px] mt-24 fixed bottom-0 left-0 right-0 z-50 p-6 pb-12 outline-none border-t border-border shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.2)]">
+                    <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-muted mb-8" />
+
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="text-xl font-bold">Filter by Time</h3>
+                      <div className="flex items-center gap-2">
+                        {selectedTimings.length > 0 && (
+                          <button
+                            onClick={() => setSelectedTimings([])}
+                            className="text-sm font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-full hover:bg-secondary transition-colors"
+                          >
+                            Clear All
+                          </button>
+                        )}
+                        <button onClick={() => setIsTimeDrawerOpen(false)} className="p-2 rounded-full hover:bg-secondary/80 text-muted-foreground transition-colors">
+                          <X className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2.5 max-h-[50vh] overflow-y-auto no-scrollbar pb-2">
+                      {availableTimings.map(timing => {
+                        const isSelected = selectedTimings.includes(timing);
+                        return (
+                          <button
+                            key={timing}
+                            onClick={() => toggleTimingFilter(timing)}
+                            className={`flex items-center gap-4 px-5 py-3.5 rounded-2xl text-base font-medium transition-all duration-200 w-full ${isSelected
+                              ? 'bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] border border-[hsl(var(--primary))]/30 shadow-sm'
+                              : 'bg-secondary/40 text-muted-foreground hover:bg-secondary border border-border/30'
+                              }`}
+                          >
+                            <span className={`${isSelected ? 'opacity-100' : 'opacity-60'} transition-opacity p-2 rounded-xl ${isSelected ? 'bg-[hsl(var(--primary))]/20' : 'bg-secondary/80'}`}>
+                              {getTimingIcon(timing)}
+                            </span>
+                            <span className="text-left flex-1 font-semibold">{timing}</span>
+
+                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${isSelected ? 'border-[hsl(var(--primary))] bg-[hsl(var(--primary))]' : 'border-muted-foreground/30'}`}>
+                              {isSelected && <div className="w-2 h-2 rounded-full bg-primary-foreground" />}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* View Results Button */}
+                    <div className="mt-6 pt-4 border-t border-border/50">
+                      <button
+                        onClick={() => setIsTimeDrawerOpen(false)}
+                        className="w-full py-4 rounded-xl bg-[hsl(var(--primary))] text-primary-foreground font-semibold text-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                      >
+                        View Results
+                        {selectedTimings.length > 0 && (
+                          <span className="bg-primary-foreground/20 px-2 py-0.5 rounded-md text-sm">
+                            {selectedTimings.length}
+                          </span>
+                        )}
+                      </button>
+                    </div>
+                  </Drawer.Content>
+                </Drawer.Portal>
+              </Drawer.Root>
             </motion.div>
           </div>
 
